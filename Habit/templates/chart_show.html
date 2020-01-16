@@ -3,22 +3,22 @@
 <div style="margin-left:-13px;margin-top:170px;">
 <canvas id="barChart"></canvas>
 <script>
-var canvas = document.getElementById("barChart");
-var ctx = canvas.getContext('2d');
-var data = {
+let canvas = document.getElementById("barChart");
+let ctx = canvas.getContext('2d');
+let data = {
     labels: [{% for habi in habit %}'{{habi.habit}}',{% endfor %}],
     datasets: [
         {
             data: [{% for nDay in nDays %}{{nDay}},{% endfor %}],
             borderColor: 'lightblue',
-            borderWidth: 1,      
+            borderWidth: 1,
         }
     ]};
 
-    var options = {
+    let options = {
       responsive: true,
       maintainAspectRatio: true,
-      
+
      legend: {
               display: false
             },
@@ -38,9 +38,9 @@ var data = {
             maxRotation: 0,
             minRotation: 0,
              beginAtZero:true
-                },        
+                },
       },{
-              //x-axis for MG 
+              //x-axis for MG
               gridLines: {
                 drawOnChartArea: false, // only want the grid lines for one axis to show up
               },
@@ -68,7 +68,7 @@ var data = {
               }
             },
                {
-              //x-axis for Computed MG 
+              //x-axis for Computed MG
               gridLines: {
                 drawOnChartArea: false, // only want the grid lines for one axis to show up
               },
@@ -113,9 +113,9 @@ var data = {
                      min: 0,
                 // tslint:disable-next-line: no-bitwise
                 max: 7,
-                },        
+                },
       }]
-    },      
+    },
       annotation: {
         annotations: [{
             type: 'line',
@@ -129,7 +129,7 @@ var data = {
   };
 
 // Chart declaration:
-var multiLineChart = new Chart(ctx, {
+let multiLineChart = new Chart(ctx, {
   type: 'bar',
   data: data,
   options: options
