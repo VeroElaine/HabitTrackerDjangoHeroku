@@ -53,6 +53,7 @@
 		<div>
 			<div id="header_bgImage"></div>
 			<center><h1 id="header_title">My Habit Tracker</h1></center>
+			<button class="btn btn-default" id="btn_home">Home</button>
 			<button class="btn btn-default" id="btn_add" data-toggle="modal" data-target="#myModal">Add a New Habit</button>
 			<input type="button" class="btn btn-default" id="btn_chart">
 		</div>
@@ -112,8 +113,8 @@
 			       		<input type="checkbox" name="Sun" id="Sun" class="form-control" style="width:3vw;">
 			       	</div>
 				</div>
-		      	
-		        
+
+
 		      </div>
 
 		      <!-- Modal footer -->
@@ -180,6 +181,11 @@
 						document.location = "/";
 						return;
 					}
+				});
+
+				$("#btn_home").click(function(){
+					localStorage.setItem("btn_value", "View Chart");
+					document.location = "/";
 				});
 			});
 		</script>
