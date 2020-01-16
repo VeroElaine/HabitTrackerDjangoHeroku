@@ -20,6 +20,7 @@
 <div id="edit_box">
 	{% for filters in filter %}
 	<div>
+		<input type="hidden" value={{filters.habit}} id="fhabit" name="fhabit">
 		<label>Habit:</label>
 		<input type="text" name="ehabit" id="ehabit" value={{filters.habit}} class="form-control"><br />
 		<label>Time:</label>
@@ -119,6 +120,7 @@
 <script>
 	$(document).ready(function(){
 		$("#eEdit").click(function(){
+			let fhabit = $("#fhabit").val();
 			let habit = $("#ehabit").val();
 			let time = $("#eTime").val();
 			let Mon = $("#eMon").is(':checked');
@@ -132,6 +134,7 @@
 				url: '/modifyhabit/',
 				method: 'POST',
 				data:{
+					fhabit: fhabit,
 					habit: habit,
 					Time: time,
 					Mon: Mon,

@@ -26,6 +26,7 @@ def Delete_Habit(request):
 	return HttpResponse("success")
 
 def Modify_Habit(request):
+	fhabit = request.POST.get('fhabit')
 	mhabit = request.POST.get('habit')
 	mtime = request.POST.get('Time')
 	mMon = request.POST.get('Mon')
@@ -35,7 +36,7 @@ def Modify_Habit(request):
 	mFri = request.POST.get('Fri')
 	mSat = request.POST.get('Sat')
 	mSun = request.POST.get('Sun')
-	Habit.objects.filter(habit=request.POST.get('habit')).update(habit=mhabit, Time=mtime, Mon=mMon, Tue=mTue, Wed=mWed, Thu=mThu, Fri=mFri, Sat=mSat, Sun=mSun)
+	Habit.objects.filter(habit=request.POST.get('fhabit')).update(habit=mhabit, Time=mtime, Mon=mMon, Tue=mTue, Wed=mWed, Thu=mThu, Fri=mFri, Sat=mSat, Sun=mSun)
 	return HttpResponse("success")
 
 def Chart_show(request):
