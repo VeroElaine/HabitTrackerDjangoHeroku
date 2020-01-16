@@ -167,7 +167,7 @@
 				});
 				$("#btn_home").click(function(){
 						$("#btn_home").val(localStorage.getItem("btn_value"));
-						document.location = "/habit/";
+						document.location = "/";
 						return;
 
 				});
@@ -183,7 +183,7 @@
 					else{
 						localStorage.setItem("btn_value", "View Chart");
 						$("#btn_chart").val(localStorage.getItem("btn_value"));
-						document.location = "/habit/";
+						document.location = "/";
 						return;
 					}
 				});
