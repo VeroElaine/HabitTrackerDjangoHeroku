@@ -19,7 +19,7 @@
 		</thead>
 		<tbody>
 			{% for habi in habit %}
-
+			
 				<tr>
 					<form method="post" action="edithabit/">
 						<input type="hidden" name="EditID" id="EditID" value={{habi.habit}}>
@@ -94,10 +94,10 @@
 						</td>
 						{% endif %}
 						<td>{{ habi.Time}}</td>
-						<td><button type="submit" class="btn btn-info" style="color:white;">View/Edit</button></td>
+						<td><button type="submit" class="btn btn-success">View/Edit</button></td>
 					</form>
 				</tr>
-
+			
 			{% endfor %}
 		</tbody>
 	</table>
@@ -105,7 +105,7 @@
 <script>
 	$(document).ready(function(){
 		$(".checkmark").click(function(){
-			let icon_state = $(this).attr('name');
+			var icon_state = $(this).attr('name');
 			if(icon_state == "checkmark")
 				$(this).attr('name', 'close-circle');
 			else

@@ -120,16 +120,16 @@
 <script>
 	$(document).ready(function(){
 		$("#eEdit").click(function(){
-			let fhabit = $("#fhabit").val();
-			let habit = $("#ehabit").val();
-			let time = $("#eTime").val();
-			let Mon = $("#eMon").is(':checked');
-			let Tue = $("#eTue").is(':checked');
-			let Wed = $("#eWed").is(':checked');
-			let Thu = $("#eThu").is(':checked');
-			let Fri = $("#eFri").is(':checked');
-			let Sat = $("#eSat").is(':checked');
-			let Sun = $("#eSun").is(':checked');
+			var fhabit = $("#fhabit").val();
+			var habit = $("#ehabit").val();
+			var time = $("#eTime").val();
+			var Mon = $("#eMon").is(':checked');
+			var Tue = $("#eTue").is(':checked');
+			var Wed = $("#eWed").is(':checked');
+			var Thu = $("#eThu").is(':checked');
+			var Fri = $("#eFri").is(':checked');
+			var Sat = $("#eSat").is(':checked');
+			var Sun = $("#eSun").is(':checked');
 			$.ajax({
 				url: '/modifyhabit/',
 				method: 'POST',
@@ -152,7 +152,7 @@
 		});
 
 		$("#eDelete").click(function(){
-			let habit = $("#ehabit").val();
+			var habit = $("#ehabit").val();
 			$.ajax({
 				url: '/deletehabit/',
 				method: 'POST',

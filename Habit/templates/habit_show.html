@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Habit Tracker Python/Django</title>
+		<title>Habit Show</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -9,7 +9,8 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 		<script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
 		<script src="https://code.jscharting.com/2.9.0/jscharting.js"></script>
-		<link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.min.js"></script>
+		<script src="https://codepen.io/k3no/pen/PGXXxQ"></script>
 		<style>
 			#tbl_habit{
 				width:90vw;
@@ -21,11 +22,10 @@
 				width: 50vw;
 				margin: auto;
 				margin-top: -18%;
-				margin-right: 22%;
-				/* z-index: 10; */
-				font-family: 'Pacifico', cursive;
+				z-index: 10;
+				font-family: Algerian;
 				color:white;
-				font-size:6vw;
+				font-size:5vw;
 			}
 			#header_bgImage{
 				z-index: -10;
@@ -34,15 +34,8 @@
 				border-style: outset;
 				background-color: #63c5da;
 			}
-
-			#btn_home{
-				margin-left: 39%;
-				margin-top: 2%;
-				color:#63c5da;
-				background-color: white;
-			}
 			#btn_add{
-				margin-left: 1%;
+				margin-left: 40%;
 				margin-top: 2%;
 				color:#63c5da;
 				background-color: white;
@@ -50,7 +43,7 @@
 
 			#btn_chart{
 				margin-top: 2vw;
-				margin-left: 1%;
+				margin-left: 40px;
 				color:#63c5da;
 				background-color: white;
 			}
@@ -60,7 +53,6 @@
 		<div>
 			<div id="header_bgImage"></div>
 			<center><h1 id="header_title">My Habit Tracker</h1></center>
-			<button class="btn btn-default" id="btn_home" data-toggle="modal" data-target="habit/">Home</button>
 			<button class="btn btn-default" id="btn_add" data-toggle="modal" data-target="#myModal">Add a New Habit</button>
 			<input type="button" class="btn btn-default" id="btn_chart">
 		</div>
@@ -120,8 +112,8 @@
 			       		<input type="checkbox" name="Sun" id="Sun" class="form-control" style="width:3vw;">
 			       	</div>
 				</div>
-
-
+		      	
+		        
 		      </div>
 
 		      <!-- Modal footer -->
@@ -135,17 +127,24 @@
 		</div>
 		<script>
 			$(document).ready(function(){
+				if(localStorage.getItem("btn_value") == ""){
+					localStorage.setItem("btn_value", "View Chart");
+				}
 				$("#btn_chart").val(localStorage.getItem("btn_value"));
 				$("#btnSubmit").click(function(){
-					let habit = $("#habit").val();
-					let time = $("#Time").val();
-					let Mon = $("#Mon").is(':checked');
-					let Tue = $("#Tue").is(':checked');
-					let Wed = $("#Wed").is(':checked');
-					let Thu = $("#Thu").is(':checked');
-					let Fri = $("#Fri").is(':checked');
-					let Sat = $("#Sat").is(':checked');
-					let Sun = $("#Sun").is(':checked');
+					if(localStorage.getItem("btn_value") == "View Table"){
+						alert("Please Add this on Table View");
+						return;
+					}
+					var habit = $("#habit").val();
+					var time = $("#Time").val();
+					var Mon = $("#Mon").is(':checked');
+					var Tue = $("#Tue").is(':checked');
+					var Wed = $("#Wed").is(':checked');
+					var Thu = $("#Thu").is(':checked');
+					var Fri = $("#Fri").is(':checked');
+					var Sat = $("#Sat").is(':checked');
+					var Sun = $("#Sun").is(':checked');
 					$.ajax({
 						url: 'addhabit/',
 						method: 'POST',
@@ -165,19 +164,14 @@
 						}
 					});
 				});
-				$("#btn_home").click(function(){
-						$("#btn_home").val(localStorage.getItem("btn_value"));
-						document.location = "/";
-						return;
 
-				});
 				$("#btn_chart").click(function(){
-					let btn_value =  $("#btn_chart").val();
+					var btn_value =  $("#btn_chart").val();
 					localStorage.setItem("btn_value", btn_value);
 					if(localStorage.getItem("btn_value") == "View Chart"){
 						localStorage.setItem("btn_value", "View Table");
 						$("#btn_chart").val(localStorage.getItem("btn_value"));
-						document.location = "chartshow/";
+						document.location = "/chartshow/";
 						return;
 					}
 					else{
@@ -187,7 +181,6 @@
 						return;
 					}
 				});
-
 			});
 		</script>
 	</body>
