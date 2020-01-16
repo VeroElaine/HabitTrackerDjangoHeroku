@@ -1,0 +1,140 @@
+{% extends "habit_show.html" %}
+{% block content %}
+<div style="margin-left:-13px;margin-top:170px;">
+<canvas id="barChart"></canvas>
+<script>
+var canvas = document.getElementById("barChart");
+var ctx = canvas.getContext('2d');
+var data = {
+    labels: [{% for habi in habit %}'{{habi.habit}}',{% endfor %}],
+    datasets: [
+        {
+            data: [{% for nDay in nDays %}{{nDay}},{% endfor %}],
+            borderColor: 'lightblue',
+            borderWidth: 1,      
+        }
+    ]};
+
+    var options = {
+      responsive: true,
+      maintainAspectRatio: true,
+      
+     legend: {
+              display: false
+            },
+   tooltips: {
+              callbacks: {
+                label: function (tooltipItem) {
+                  return 'Days per week : ' + Number(tooltipItem.yLabel);
+                }
+              }
+            },
+    scales: {
+      xAxes: [{
+        gridLines: {
+        display: false,
+              },
+          ticks: {
+            maxRotation: 0,
+            minRotation: 0,
+             beginAtZero:true
+                },        
+      },{
+              //x-axis for MG 
+              gridLines: {
+                drawOnChartArea: false, // only want the grid lines for one axis to show up
+              },
+              ticks: {
+                autoSkip: false,
+                maxRotation: 0,
+                minRotation: 0,
+                callback: (function (value, index, values) {
+                  if (typeof value === 'string') {
+                    let a, b;
+                    if (value.includes(':')) {
+                      a = value.split(':');
+                      b = a[1].split('-');
+                      // handling MG conflict
+                      if (a[0] === 'MG9 ') {
+                        return 'MG9';
+                      } else if (a[0] === 'MG13 ') {
+                        return 'MG13';
+                      } else if (a[0] === 'MG15 ') {
+                        return 'MG15';
+                      } else { return ' '; }
+                    } else { return ' '; }
+                  }
+                }),
+              }
+            },
+               {
+              //x-axis for Computed MG 
+              gridLines: {
+                drawOnChartArea: false, // only want the grid lines for one axis to show up
+              },
+              ticks: {
+                autoSkip: false,
+                maxRotation: 0,
+                minRotation: 0,
+                callback: (function (value, index, values) {
+                  if (typeof value === 'string') {
+                    let a, b;
+                    if (value.includes(':')) {
+                      a = value.split(':');
+                      b = a[1].split('-');
+                      // handling computed MG conflict
+                      if (a[0] === ('MG13, Computed MG13 ')) {
+                        return ['Computed', 'MG13'];
+
+                      } else if (a[0] === ('MG13, Computed MG15 ')) {
+                        return ['Computed', 'MG15'];
+                      } else if (a[0] === 'Computed MG13 ') {
+                        return ['Computed', 'MG13'];
+                      } else if (a[0] === 'Computed MG15 ') {
+                        return ['Computed', 'MG15'];
+                      } else if (a[0] === 'MG15, Computed MG15 ') {
+                        return ['Computed', 'MG15'];
+                      } else if (a[0] === 'MG15, Computed MG13 ') {
+                        return ['Computed', 'MG13'];
+                      } else { return ' '; }
+                    } else { return ' '; }
+                  }
+                }),
+              }
+            }],
+      yAxes: [{
+          position: 'left',
+              scaleLabel: {
+                display: true,
+                labelString: 'Aircraft numbers'
+              },
+                  ticks: {
+                    beginAtZero:true,
+                     min: 0,
+                // tslint:disable-next-line: no-bitwise
+                max: 7,
+                },        
+      }]
+    },      
+      annotation: {
+        annotations: [{
+            type: 'line',
+            mode: 'vertical',
+            scaleID: 'x-axis-0',
+            borderColor: 'tomato',
+            borderWidth: 1
+        }],
+        drawTime: "afterDraw" // (default)
+    }
+  };
+
+// Chart declaration:
+var multiLineChart = new Chart(ctx, {
+  type: 'bar',
+  data: data,
+  options: options
+});
+</script>
+
+</div>
+{% endblock %}

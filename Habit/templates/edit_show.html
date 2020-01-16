@@ -1,0 +1,169 @@
+{% extends 'habit_show.html' %}
+
+{% block content %}
+<style>
+	.check_eday{
+		width:150px;
+		text-align: center;
+	}
+
+	#edit_box{
+		width: 60%;
+		margin: auto;
+		margin-top: 8%;
+	}
+	#btns{
+		margin-left: 30%;
+		margin-top: 5%;
+	}
+</style>
+<div id="edit_box">
+	{% for filters in filter %}
+	<div>
+		<input type="hidden" value={{filters.habit}} id="fhabit" name="fhabit">
+		<label>Habit:</label>
+		<input type="text" name="ehabit" id="ehabit" value={{filters.habit}} class="form-control"><br />
+		<label>Time:</label>
+		<input type="time" name="eTime" id="eTime" value={{filters.Time}} class="form-control">
+	</div>
+	<div style="display:flex;width:100%;margin-top: 5%;">
+		{% if filters.Mon == 'true' %}
+		<div class="check_eday">
+			<label>Monday</label>
+			<input type="checkbox" name="eMon" id="eMon" class="form-control" checked>
+		</div>
+		{% else %}
+		<div class="check_eday">
+			<label>Monday</label>
+			<input type="checkbox" name="eMon" id="eMon" class="form-control">
+		</div>
+		{% endif %}
+
+		{% if filters.Tue == 'true' %}
+		<div class="check_eday">
+			<label>Tuesday</label>
+			<input type="checkbox" name="eTue" id="eTue" class="form-control" checked>
+		</div>
+		{% else %}
+		<div class="check_eday">
+			<label>Tuesday</label>
+			<input type="checkbox" name="eTue" id="eTue" class="form-control">
+		</div>
+		{% endif %}
+
+		{% if filters.Wed == 'true' %}
+		<div class="check_eday">
+			<label>Wednesday</label>
+			<input type="checkbox" name="eWed" id="eWed" class="form-control" checked>
+		</div>
+		{% else %}
+		<div class="check_eday">
+			<label>Wednesday</label>
+			<input type="checkbox" name="eWed" id="eWed" class="form-control">
+		</div>
+		{% endif %}
+
+		{% if filters.Thu == 'true' %}
+		<div class="check_eday">
+			<label>Thursday</label>
+			<input type="checkbox" name="eThu" id="eThu" class="form-control" checked>
+		</div>
+		{% else %}
+		<div class="check_eday">
+			<label>Thursday</label>
+			<input type="checkbox" name="eThu" id="eThu" class="form-control">
+		</div>
+		{% endif %}
+
+		{% if filters.Fri == 'true' %}
+		<div class="check_eday">
+			<label>Friday</label>
+			<input type="checkbox" name="eFri" id="eFri" class="form-control" checked>
+		</div>
+		{% else %}
+		<div class="check_eday">
+			<label>Friday</label>
+			<input type="checkbox" name="eFri" id="eFri" class="form-control">
+		</div>
+		{% endif %}
+
+		{% if filters.Sat == 'true' %}
+		<div class="check_eday">
+			<label>Saturday</label>
+			<input type="checkbox" name="eSat" id="eSat" class="form-control" checked>
+		</div>
+		{% else %}
+		<div class="check_eday">
+			<label>Saturday</label>
+			<input type="checkbox" name="eSat" id="eSat" class="form-control">
+		</div>
+		{% endif %}
+
+		{% if filters.Sun == 'true' %}
+		<div class="check_eday">
+			<label>Sunday</label>
+			<input type="checkbox" name="eSun" id="eSun" class="form-control" checked>
+		</div>
+		{% else %}
+		<div class="check_eday">
+			<label>Sunday</label>
+			<input type="checkbox" name="eSun" id="eSun" class="form-control">
+		</div>
+		{% endif %}
+	</div>
+	<div id="btns">
+		<input type="submit" id="eEdit" name="eEdit" class="btn btn-success" value="Done">
+		<input class="btn btn-danger" type="submit" id="eDelete" name="eDelete" style="margin-left: 30%;" value="Delete">
+	</div>
+	{% endfor %}
+</div>
+<script>
+	$(document).ready(function(){
+		$("#eEdit").click(function(){
+			var fhabit = $("#fhabit").val();
+			var habit = $("#ehabit").val();
+			var time = $("#eTime").val();
+			var Mon = $("#eMon").is(':checked');
+			var Tue = $("#eTue").is(':checked');
+			var Wed = $("#eWed").is(':checked');
+			var Thu = $("#eThu").is(':checked');
+			var Fri = $("#eFri").is(':checked');
+			var Sat = $("#eSat").is(':checked');
+			var Sun = $("#eSun").is(':checked');
+			$.ajax({
+				url: '/modifyhabit/',
+				method: 'POST',
+				data:{
+					fhabit: fhabit,
+					habit: habit,
+					Time: time,
+					Mon: Mon,
+					Tue: Tue,
+					Wed: Wed,
+					Thu: Thu,
+					Fri: Fri,
+					Sat: Sat,
+					Sun:Sun,
+				},
+				success: function(result){
+					document.location = "/";
+				}
+			});
+		});
+
+		$("#eDelete").click(function(){
+			var habit = $("#ehabit").val();
+			$.ajax({
+				url: '/deletehabit/',
+				method: 'POST',
+				data:{
+					ehabit: habit,
+				},
+				success: function(result){
+					document.location = "/";
+				}
+			});
+		});
+	});
+</script>
+{% endblock %}
