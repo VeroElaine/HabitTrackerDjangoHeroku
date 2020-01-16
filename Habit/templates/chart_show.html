@@ -6,7 +6,7 @@ let chart = JSC.chart('chartDiv', {
   debug: true,
   type: 'column',
   title_label_text:
-    'Hoever to see data for your habits',
+    'Hover to see data for your habits',
   legend_visible: false,
   xAxis_defaultTick_gridLine_width: 0,
   defaultPoint: {
@@ -15,7 +15,7 @@ let chart = JSC.chart('chartDiv', {
   },
   series: [
     {
-      name: 'Representatives',
+      name: 'Testing',
       points: [
         {
           name: 'Test 1',
@@ -49,53 +49,94 @@ let chart = JSC.chart('chartDiv', {
 });
 
 function tooltipCallback(point) {
-  let fDate = JSC.formatDate;
-  let fNum = JSC.formatNumber;
-  let pointStart = point.options(
-    'attributes.start'
-  );
-  let pointName = point.options('name');
-  let y = point.options('y');
+  // let fDate = JSC.formatDate;
+  // let fNum = JSC.formatNumber;
+  // let pointStart = point.options(
+  //   'attributes.start'
+  // );
+  // let pointName = point.options('name');
+  // let y = point.options('y');
+  //
+  // switch (pointName) {
+  //   case 'Test1':
+  //     return (
+  //       pointName +
+  //       ': ' +
+  //       // bold(fNum(y, 'c')) +
+  //       '<br/>Short Date: ' +
+  //       bold(fDate(pointStart, 'd'))
+  //     );
+  //   case 'Test2':
+  //     return (
+  //       pointName +
+  //       ': ' +
+  //       // bold(fNum(y, 'n0')) +
+  //       '<br/>Long Date: ' +
+  //       bold(fDate(pointStart, 'D'))
+  //     );
+  //   case 'Test3':
+  //     return (
+  //       pointName +
+  //       ': ' +
+  //       // bold(fNum(y, 'n2')) +
+  //       '<br/>Month/Day Pattern: ' +
+  //       bold(fDate(pointStart, 'M'))
+  //     );
+  //   case 'Test4':
+  //     return (
+  //       pointName +
+  //       ': ' +
+  //       // bold(fNum(y, 'p')) +
+  //       '<br/>Short Time Pattern: ' +
+  //       bold(fDate(pointStart, 't'))
+  //     );
+  // }
+  // return '';
+  // function bold(txt) {
+  //   return '<b>' + txt + '</b>';
+  // }
+ }
 
-  switch (pointName) {
-    case 'Test1':
-      return (
-        pointName +
-        ': ' +
-        bold(fNum(y, 'c')) +
-        '<br/>Short Date: ' +
-        bold(fDate(pointStart, 'd'))
-      );
-    case 'Test2':
-      return (
-        pointName +
-        ': ' +
-        bold(fNum(y, 'n0')) +
-        '<br/>Long Date: ' +
-        bold(fDate(pointStart, 'D'))
-      );
-    case 'Test3':
-      return (
-        pointName +
-        ': ' +
-        bold(fNum(y, 'n2')) +
-        '<br/>Month/Day Pattern: ' +
-        bold(fDate(pointStart, 'M'))
-      );
-    case 'Test4':
-      return (
-        pointName +
-        ': ' +
-        bold(fNum(y, 'p')) +
-        '<br/>Short Time Pattern: ' +
-        bold(fDate(pointStart, 't'))
-      );
-  }
-  return '';
-  function bold(txt) {
-    return '<b>' + txt + '</b>';
-  }
-}
+
+//trying to rewrite graph dummy data to instead get data from inputs in habittracker
+
+ // let canvas = document.getElementById("barChart");
+ // let ctx = canvas.getContext('2d');
+ // let data = {
+ //     labels: [{% for habi in habit %}'{{habi.habit}}',{% endfor %}],
+ //     datasets: [
+ //         {
+ //             data: [{% for nDay in nDays %}{{nDay}},{% endfor %}],
+ //             borderColor: 'lightblue',
+ //             borderWidth: 1,
+ //         }
+ //     ]};
+ //
+ //     let options = {
+ //       responsive: true,
+ //       maintainAspectRatio: true,
+ //
+ //      legend: {
+ //               display: false
+ //             },
+ //    tooltips: {
+ //               callbacks: {
+ //                 label: function (tooltipItem) {
+ //                   return 'Days per week : ' + Number(tooltipItem.yLabel);
+ //                 }
+ //               }
+ //             },
+ //     scales: {
+ //       xAxes: [{
+ //         gridLines: {
+ //         display: false,
+ //               },
+ //           ticks: {
+ //             maxRotation: 0,
+ //             minRotation: 0,
+ //              beginAtZero:true
+ //                 },
+ //       },
 </script>
 <div id="chartDiv" style="max-width: 740px;height: 400px;margin: 0px auto">
 </div>
