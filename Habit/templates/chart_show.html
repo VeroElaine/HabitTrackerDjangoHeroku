@@ -1,140 +1,103 @@
 {% extends "habit_show.html" %}
 {% block content %}
-<div style="margin-left:-13px;margin-top:170px;">
-<canvas id="barChart"></canvas>
+<div style="margin-top:-250px;">
 <script>
-let canvas = document.getElementById("barChart");
-let ctx = canvas.getContext('2d');
-let data = {
-    labels: [{% for habi in habit %}'{{habi.habit}}',{% endfor %}],
-    datasets: [
+let chart = JSC.chart('chartDiv', {
+  debug: true,
+  type: 'column',
+  title_label_text:
+    'Hoever to see data for your habits',
+  legend_visible: false,
+  xAxis_defaultTick_gridLine_width: 0,
+  defaultPoint: {
+    label_visible: true,
+    tooltip: tooltipCallback
+  },
+  series: [
+    {
+      name: 'Representatives',
+      points: [
         {
-            data: [{% for nDay in nDays %}{{nDay}},{% endfor %}],
-            borderColor: 'lightblue',
-            borderWidth: 1,
+          name: 'Test 1',
+          y: 3,
+          attributes: { start: '1/1/2020' },
+          label_text: 'Habit1  <br/>testing'
+        },
+        {
+          name: 'Test 2',
+          y: 8,
+          attributes: { start: '1/1/2020' },
+          label_text: 'Habit2 <br/>testing'
+        },
+        {
+          name: 'Test 3',
+          y: 5,
+          attributes: { start: '1/1/2020' },
+          label_text:
+            'habit3 <br/> testing'
+        },
+        {
+          name: 'Test 4',
+          y: 6,
+          attributes: { start: '1/1/2020' },
+          label_text:
+            'habit4 <br/>testing'
         }
-    ]};
-
-    let options = {
-      responsive: true,
-      maintainAspectRatio: true,
-
-     legend: {
-              display: false
-            },
-   tooltips: {
-              callbacks: {
-                label: function (tooltipItem) {
-                  return 'Days per week : ' + Number(tooltipItem.yLabel);
-                }
-              }
-            },
-    scales: {
-      xAxes: [{
-        gridLines: {
-        display: false,
-              },
-          ticks: {
-            maxRotation: 0,
-            minRotation: 0,
-             beginAtZero:true
-                },
-      },{
-              //x-axis for MG
-              gridLines: {
-                drawOnChartArea: false, // only want the grid lines for one axis to show up
-              },
-              ticks: {
-                autoSkip: false,
-                maxRotation: 0,
-                minRotation: 0,
-                callback: (function (value, index, values) {
-                  if (typeof value === 'string') {
-                    let a, b;
-                    if (value.includes(':')) {
-                      a = value.split(':');
-                      b = a[1].split('-');
-                      // handling MG conflict
-                      if (a[0] === 'MG9 ') {
-                        return 'MG9';
-                      } else if (a[0] === 'MG13 ') {
-                        return 'MG13';
-                      } else if (a[0] === 'MG15 ') {
-                        return 'MG15';
-                      } else { return ' '; }
-                    } else { return ' '; }
-                  }
-                }),
-              }
-            },
-               {
-              //x-axis for Computed MG
-              gridLines: {
-                drawOnChartArea: false, // only want the grid lines for one axis to show up
-              },
-              ticks: {
-                autoSkip: false,
-                maxRotation: 0,
-                minRotation: 0,
-                callback: (function (value, index, values) {
-                  if (typeof value === 'string') {
-                    let a, b;
-                    if (value.includes(':')) {
-                      a = value.split(':');
-                      b = a[1].split('-');
-                      // handling computed MG conflict
-                      if (a[0] === ('MG13, Computed MG13 ')) {
-                        return ['Computed', 'MG13'];
-
-                      } else if (a[0] === ('MG13, Computed MG15 ')) {
-                        return ['Computed', 'MG15'];
-                      } else if (a[0] === 'Computed MG13 ') {
-                        return ['Computed', 'MG13'];
-                      } else if (a[0] === 'Computed MG15 ') {
-                        return ['Computed', 'MG15'];
-                      } else if (a[0] === 'MG15, Computed MG15 ') {
-                        return ['Computed', 'MG15'];
-                      } else if (a[0] === 'MG15, Computed MG13 ') {
-                        return ['Computed', 'MG13'];
-                      } else { return ' '; }
-                    } else { return ' '; }
-                  }
-                }),
-              }
-            }],
-      yAxes: [{
-          position: 'left',
-              scaleLabel: {
-                display: true,
-                labelString: 'Aircraft numbers'
-              },
-                  ticks: {
-                    beginAtZero:true,
-                     min: 0,
-                // tslint:disable-next-line: no-bitwise
-                max: 7,
-                },
-      }]
-    },
-      annotation: {
-        annotations: [{
-            type: 'line',
-            mode: 'vertical',
-            scaleID: 'x-axis-0',
-            borderColor: 'tomato',
-            borderWidth: 1
-        }],
-        drawTime: "afterDraw" // (default)
+      ]
     }
-  };
-
-// Chart declaration:
-let multiLineChart = new Chart(ctx, {
-  type: 'bar',
-  data: data,
-  options: options
+  ]
 });
-</script>
 
+function tooltipCallback(point) {
+  let fDate = JSC.formatDate;
+  let fNum = JSC.formatNumber;
+  let pointStart = point.options(
+    'attributes.start'
+  );
+  let pointName = point.options('name');
+  let y = point.options('y');
+
+  switch (pointName) {
+    case 'Test1':
+      return (
+        pointName +
+        ': ' +
+        bold(fNum(y, 'c')) +
+        '<br/>Short Date: ' +
+        bold(fDate(pointStart, 'd'))
+      );
+    case 'Test2':
+      return (
+        pointName +
+        ': ' +
+        bold(fNum(y, 'n0')) +
+        '<br/>Long Date: ' +
+        bold(fDate(pointStart, 'D'))
+      );
+    case 'Test3':
+      return (
+        pointName +
+        ': ' +
+        bold(fNum(y, 'n2')) +
+        '<br/>Month/Day Pattern: ' +
+        bold(fDate(pointStart, 'M'))
+      );
+    case 'Test4':
+      return (
+        pointName +
+        ': ' +
+        bold(fNum(y, 'p')) +
+        '<br/>Short Time Pattern: ' +
+        bold(fDate(pointStart, 't'))
+      );
+  }
+  return '';
+  function bold(txt) {
+    return '<b>' + txt + '</b>';
+  }
+}
+</script>
+<div id="chartDiv" style="max-width: 740px;height: 400px;margin: 0px auto">
+</div>
 </div>
 {% endblock %}
