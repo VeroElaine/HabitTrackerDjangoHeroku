@@ -123,7 +123,7 @@
 		      </div>
 
 		    </div>
-		  </div>
+		  </div> 
 		</div>
 		<script>
 			$(document).ready(function(){
@@ -136,6 +136,7 @@
 						alert("Please Add this on Table View");
 						return;
 					}
+					$(this).attr('disabled',true);
 					var habit = $("#habit").val();
 					var time = $("#Time").val();
 					var Mon = $("#Mon").is(':checked');
